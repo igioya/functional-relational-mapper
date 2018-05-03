@@ -1,18 +1,23 @@
 
-
-case class Column[T](nameColumn:String) {
-  val value:T
-  def > (column: Column[T]):Condition[T] = {
+case class Column[T](nameColumn:String) extends Comparable[T]{
+  def > (column: Comparable[T]):Condition[T] = {
     return Condition[T](">", this, column)
   }
+  def eval = nameColumn
 }
 
 case class Condition[T](
   val operator:String
-  ,val column1: Column[T]
-  ,val column2: Column[T]){
+  ,val comparable1: Comparable[T]
+  ,val comparable2: Comparable[T]){
   
   def toSql(){
-    return column1.nameColumn + " " + operator + " " +column2.nameColumn
+    return comparable1.eval + " " + operator + " " + comparable2.eval
   }
 }
+
+trait Comparable[T]{
+  def eval:String
+}
+
+  

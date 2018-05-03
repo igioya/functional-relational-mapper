@@ -1,5 +1,4 @@
 
-
 case class Query(table:Table) {
   var query:String = "select * from "+ table.tableName
   
@@ -8,7 +7,7 @@ case class Query(table:Table) {
     val condition = f.apply(table)
     val alias = aliasGenerator.newAlias
     val newQuery = "select * from (" + query + ") as " + alias + 
-                   "where " + alias + "." + condition.column1.nameColumn + condition
+                   "where " + alias + "." + condition.comparable1.eval + condition
 //    this.copy(query = newQuery)
     var copy = Query(table)
     copy.query = newQuery
