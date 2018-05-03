@@ -6,7 +6,7 @@ class BDClient {
     def * = (nombre, edad)
   }
   
-  val viejitos:Query = Query(Perros).filter(Perros.edad > 12)
+  val viejitos:Query = Query(Perros).filter(Perros.edad > 1)
   
 }
 

@@ -9,7 +9,10 @@ case class Query(table:Table) {
     val alias = aliasGenerator.newAlias
     val newQuery = "select * from (" + query + ") as " + alias + 
                    "where " + alias + "." + condition.column1.nameColumn + condition
-    this.copy(query = newQuery)
+//    this.copy(query = newQuery)
+    var copy = Query(table)
+    copy.query = newQuery
+    copy
   }
   def run:ResultSet = null
   
