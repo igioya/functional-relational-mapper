@@ -1,5 +1,3 @@
 
 
-class ResultSet {
-  
-}
+case class ResultSet()

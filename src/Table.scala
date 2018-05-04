@@ -1,5 +1,5 @@
 
 abstract class Table(val tableName:String) {
-  def * 
+  def *():List[Column[_]]
 }
 
