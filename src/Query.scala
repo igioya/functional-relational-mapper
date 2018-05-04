@@ -2,21 +2,15 @@
 case class Query(table:Table) {
   var query:String = "select * from "+ table.tableName
   
+  def run:ResultSet = null
+  def showSql:String = query
   def map:Query = this    
-  def filter(f: Table => Condition[_]):Query = {
-    val condition = f.apply(table)
-    val alias = aliasGenerator.newAlias
+  def filter(condition:Condition[_]):Query = {
+    val alias = AliasGenerator.anyAlias
     val newQuery = "select * from (" + query + ") as " + alias + 
-                   "where " + alias + "." + condition.comparable1.eval + condition
-//    this.copy(query = newQuery)
+                   " where " + alias + "." + condition.eval
     var copy = Query(table)
     copy.query = newQuery
     copy
   }
-  def run:ResultSet = null
-  
-}
-
-object aliasGenerator{
-  def newAlias:String = "a"
 }
