@@ -11,11 +11,11 @@ case class Select(from:String, columns: List[Column[_]], where:Option[Condition[
   }
   
   def evalColumns(columns: List[Column[_]]):String = {
-    var acc:String = ""
-    val ret:String = columns.foldLeft(acc){
+    var acum:String = ""
+    val sqlColumns:String = columns.foldLeft(acum){
       (str,col) => str + col.nameColumn + ","
     }
-    ret.dropRight(1)
+    sqlColumns.dropRight(1)
   }
   
   def subselect(columns: List[Column[_]], condition:Option[Condition[_]]):Select = {

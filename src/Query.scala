@@ -6,7 +6,6 @@ case class Query(table:Table) {
   def showSql:String = query.mapToSql
   def map:Query = this    
   def filter(columns: List[Column[_]],condition:Condition[_]):Query = {
-    val alias = AliasGenerator.anyAlias
     val newQuery = query.subselect(columns, Some(condition))
     var copy = Query(table)
     copy.query = newQuery
