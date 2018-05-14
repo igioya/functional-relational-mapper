@@ -1,3 +1,3 @@
 
 
-case class ResultSet()
+case class ResultSet[ResultType]()
