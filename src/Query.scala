@@ -1,3 +1,4 @@
+
 class Query[TableType <: Table, ResultType](val table: TableType){
   
   var columns: List[Column[_]] = table.*
@@ -18,5 +19,12 @@ class Query[TableType <: Table, ResultType](val table: TableType){
     return q
   }
   
-  def select(): ResultSet[ResultType] = new ResultSet() 
+  def select(sqlEngine: RelationalEngine): ResultSet[ResultType] = {
+    val sel = new Select(this, sqlEngine)
+    return sel.resultSet();
+    
+  }
 }
+
+
+

@@ -2,7 +2,7 @@
 
 trait Table{
   type ResultType
-  type TableType
+  type TableType <: Table
   
   val tableName: String
   def *(): List[Column[_]]
