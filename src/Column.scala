@@ -1,13 +1,14 @@
-
-case class Column[T](nameColumn:String, nameTable:String) extends Operable[T]{
-  def > (column: Operable[T]):Condition[T] = {
-    return Condition[T](">", this, column)
+case class Column[T](val columnName: String) extends Operable[T]{
+  
+  var valor: Option[T] = None
+  
+  def >(column: Operable[T]):Condition[T] = {
+    val cond = new Condition[T]() 
+    cond.operator   = ">"
+    cond.column1    = this
+    cond.column2    = column
+    return cond
   }
   
-  def == (column: Operable[T]):Condition[T] = {
-    return Condition[T]("=", this, column)
-  }
-  def eval = nameColumn
+  def eval = columnName
 }
-
-  

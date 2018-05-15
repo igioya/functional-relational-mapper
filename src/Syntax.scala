@@ -1,5 +1,3 @@
-
-
 object Syntax {
   implicit class ComparableInt(val value: Int) extends Operable[Int]{
     def eval = value.toString()  
@@ -9,4 +7,8 @@ object Syntax {
     def eval = value  
     def toComparable = value.asInstanceOf[Operable[String]]
   }
+}
+
+trait Operable[T]{
+  def eval:String
 }

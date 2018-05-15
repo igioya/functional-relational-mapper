@@ -1,28 +1,22 @@
-
-case class Query[ResultType, TableType](table: Table[ResultType, TableType]) {
-  var conditions: List[Condition[_]] = List.empty
+class Query[TableType <: Table, ResultType](val table: TableType){
+  
   var columns: List[Column[_]] = table.*
-  def run:ResultSet[ResultType] = {
-    val select = Select(this, columns, conditions)
-    select.run
+  var conditions: List[Condition[_]] = List.empty
+  
+  def map[OtherResultType](f: TableType => Column[OtherResultType]): Query[TableType,OtherResultType]  = {
+    val q = new Query[TableType, OtherResultType](table)
+    q.columns = List(f.apply(table))
+    q.conditions = this.conditions
+    
+    return q
+  }
+  def filter(f: TableType => Condition[_]): Query[TableType, ResultType] = {
+    val q = new Query[TableType, ResultType](table)
+    q.columns = this.columns
+    q.conditions = this.conditions.+:(f.apply(table))
+    
+    return q
   }
   
-  def map[OtherResultType](f: table.type => Column[OtherResultType]): Query[OtherResultType, TableType] = {
-    val column = f.apply(table)
-    val newTable = TableMapping[OtherResultType, TableType](table.tableName, table.*)
-    val newQuery = Query[OtherResultType, TableType](newTable)
-    newQuery.columns = List(column)
-    return newQuery
-  }
-  def filter(f: Table[ResultType, TableType] => TableType => Condition[_]):Query[ResultType, TableType] = {
-    val newQuery = this.copy(table)
-    newQuery.conditions = newQuery.conditions.+:(f.apply(table).apply(table))
-    return newQuery
-  }
+  def select(): ResultSet[ResultType] = new ResultSet() 
 }
-
-
-
-
-
-
