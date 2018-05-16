@@ -17,12 +17,12 @@ object BDClient extends App{
   def query[T <: Table](t: T): Query[T, t.ResultType] = {
     return new Query[T, t.ResultType](t)
   }
-  val q = query(Perros)
-  val a = q.map(_.nombre)
-  val b = a.filter(_.edad > 3)
-  val c = b.select(new SqlEngine)
+//  val q = query(Perros)
+//  val a = q.map(_.nombre)
+//  val b = a.filter(_.edad > 3)
+//  val c = b.select(new SqlEngine)
   
-  val d = q.filter(_.edad > 2)
+  val d = query(Perros).take(2).drop(4).select(new SqlEngine)
 //  val d = q.filter(_.nombre > 3)
 //  val e = q.filter(_.asd > 3)
   
