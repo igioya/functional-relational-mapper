@@ -1,5 +1,4 @@
-class Condition[ColumnType](){
-  var operator: String = null
-  var column1: Operable[ColumnType] = null
-  var column2: Operable[ColumnType] = null
-}
+class Condition[ColumnType](
+  val operator: String,
+  val column1: Operable[ColumnType],
+  val column2: Operable[ColumnType])
